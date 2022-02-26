@@ -1,4 +1,5 @@
-FROM ubuntu:focal AS base
+FROM ubuntu:focal
+ARG TAGS
 WORKDIR /usr/local/bin
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -10,13 +11,5 @@ RUN apt-get update && \
     apt-get clean autoclean && \
     apt-get autoremove --yes
 
-FROM base AS jp
-ARG TAGS
-RUN addgroup --gid 1000 jpemberton
-RUN adduser --gecos jpemberton --uid 1000 --gid 1000 --disabled-password jpemberton
-USER jpemberton
-WORKDIR /home/jpemberton
-
-FROM jp
 COPY . .
-CMD ["sh"]
+CMD ["sh", "-c", "ansible-playbook $TAGS local.yml"]
