@@ -12,4 +12,4 @@ RUN apt-get update && \
     apt-get autoremove --yes
 
 COPY . .
-CMD ["sh", "-c", "ansible-playbook $TAGS local.yml"]
+CMD ["sh", "-c", "ansible-playbook $TAGS local.yml", "bash"]
